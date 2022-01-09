@@ -34,6 +34,26 @@ class _DetailPageState extends State<DetailPage> {
       }
     }
 
+    Future<void> showConfirmation() async {
+      return showDialog(
+        context: context,
+        builder: (BuildContext context) => AlertDialog(
+          title: const Text('Konfirmasi'),
+          content: const Text('Apakah kamu ingin menghubungi pemilik kos?'),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () => Navigator.pop(context, 'Cancel'),
+              child: const Text('Batal'),
+            ),
+            TextButton(
+              onPressed: () => launchUrl('tel:${widget.space.phone}'),
+              child: const Text('Hubungi'),
+            ),
+          ],
+        ),
+      );
+    }
+
     return Scaffold(
       backgroundColor: whiteColor,
       body: SafeArea(
@@ -232,7 +252,7 @@ class _DetailPageState extends State<DetailPage> {
                         width: MediaQuery.of(context).size.width - (2 * edge),
                         child: RaisedButton(
                           onPressed: () {
-                            launchUrl('tel:${widget.space.phone}');
+                            showConfirmation();
                           },
                           color: purpleColor,
                           shape: RoundedRectangleBorder(
